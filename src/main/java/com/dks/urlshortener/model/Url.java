@@ -26,6 +26,10 @@ public class Url {
 
     @Column(unique = true)
     private String shortCode;
+    
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     private LocalDateTime createdAt;
 

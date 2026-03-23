@@ -31,4 +31,16 @@ public class GlobalExceptionHandler {
 				.build();
 		return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
+	@ExceptionHandler(AliasAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> handleAliasException(AliasAlreadyExistsException ex) {
+
+        ErrorResponse error = ErrorResponse.builder()
+                .errorCode("ALIAS_ALREADY_EXISTS")
+                .message(ex.getMessage())
+                .timestamp(LocalDateTime.now())
+                .build();
+
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
 }

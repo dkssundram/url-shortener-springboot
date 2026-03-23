@@ -10,4 +10,6 @@ public class ShortenUrlRequest {
 	@NotBlank(message = "Original URL cannot be blank")
 	@Pattern(regexp = "^(http|https)://.*$", message = "Invalid URL format")
 	private String originalUrl;
+	
+	private String customAlias;
 }
