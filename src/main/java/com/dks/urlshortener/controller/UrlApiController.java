@@ -2,6 +2,7 @@ package com.dks.urlshortener.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,7 @@ import com.dks.urlshortener.util.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
@@ -36,8 +37,15 @@ public class UrlApiController {
 	public ShortenUrlResponse createShortUrl(@RequestBody @Valid ShortenUrlRequest request, 
 			HttpServletRequest httpRequest) {
 		
-		String token = httpRequest.getHeader("Authorization").substring(7);
-	    String email = jwtUtil.extractEmail(token);
+		String authHeader = httpRequest.getHeader("Authorization");
+
+		if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+		    throw new RuntimeException("Missing or invalid Authorization header");
+		}
+
+		String token = authHeader.substring(7);
+		String email = jwtUtil.extractEmail(token);
+		
 		var result = urlService.createShortUrl(request.getOriginalUrl(), 
 												request.getCustomAlias(), email);
 		return ShortenUrlResponse.builder()

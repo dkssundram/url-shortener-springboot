@@ -12,5 +12,4 @@ public class UrlshortenerApplication {
 		SpringApplication.run(UrlshortenerApplication.class, args);
 		System.out.println("URL Shortener Application started successfully!");
 	}
-
 }
