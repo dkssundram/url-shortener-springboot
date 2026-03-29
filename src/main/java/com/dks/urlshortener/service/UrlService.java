@@ -63,8 +63,7 @@ public class UrlService {
                 .build();
 
         Url savedUrl = urlRepository.save(url);
-
-        String shortCode = Base62Encoder.encode(savedUrl.getId());
+        String shortCode = Base62Encoder.encode(savedUrl.getId() + 1000000);
         savedUrl.setShortCode(shortCode);
 
         return urlRepository.save(savedUrl);
