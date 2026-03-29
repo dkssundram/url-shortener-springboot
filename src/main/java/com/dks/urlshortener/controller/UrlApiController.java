@@ -33,6 +33,11 @@ public class UrlApiController {
 	@Value("${app.base-url}")
 	private String baseUrl;
 	
+	@GetMapping("/")
+	public String home() {
+	    return "URL Shortener is running";
+	}
+	 
 	@PostMapping("/shorten")
 	public ShortenUrlResponse createShortUrl(@RequestBody @Valid ShortenUrlRequest request, 
 			HttpServletRequest httpRequest) {
