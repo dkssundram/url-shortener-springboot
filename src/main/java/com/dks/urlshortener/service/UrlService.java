@@ -71,8 +71,9 @@ public class UrlService {
     }
 	
 	public String getOriginalUrl(String shortCode) {
+		System.out.println("Attempting to retrieve original URL for short code: " + shortCode);
         String originalUrl = urlCacheService.getOriginalUrlFromCache(shortCode);
-
+        
         Url url = urlRepository.findByShortCode(shortCode)
                 .orElseThrow(() -> new UrlNotFoundException("Short URL does not exist"));
         
