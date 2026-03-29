@@ -72,7 +72,7 @@ public class UrlService {
 	
 	public String getOriginalUrl(String shortCode) {
 		System.out.println("Attempting to retrieve original URL for short code: " + shortCode);
-        String originalUrl = urlCacheService.getOriginalUrlFromCache(shortCode);
+        //String originalUrl = urlCacheService.getOriginalUrlFromCache(shortCode);
         
         Url url = urlRepository.findByShortCode(shortCode)
                 .orElseThrow(() -> new UrlNotFoundException("Short URL does not exist"));
@@ -87,7 +87,7 @@ public class UrlService {
         url.setClickCount(url.getClickCount() + 1);
         urlRepository.save(url);
 
-        return originalUrl;
+        return url.getOriginalUrl();
     }
 	
 	public AnalyticsResponse getAnalytics(String shortCode) {
